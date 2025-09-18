@@ -37,11 +37,17 @@
 - **🔍 JSON Validation** - Real-time syntax validation with detailed error reporting
 - **📦 JSON Minification** - Compress JSON to reduce file size
 - **🎨 Syntax Highlighting** - Color-coded JSON elements for better readability
+- **🔧 Auto-Fix Errors** - Automatically correct common JSON syntax issues
 
 ### 🚀 Advanced Features
 - **📋 Clipboard Integration** - One-click copy/paste functionality
 - **💾 File Export** - Download formatted JSON as `.json` files
-- **⚙️ Customizable Options** - Sort keys, remove comments, and more
+- **📁 File Upload** - Upload and process JSON files directly
+- **🔗 URL Loading** - Load JSON data from remote URLs
+- **🌳 Tree View** - Interactive hierarchical view of JSON structure
+- **🔍 Search & Filter** - Find specific keys or values within JSON
+- **📊 Statistics** - View file size, depth, key count, and array statistics
+- **⚙️ Customizable Options** - Sort keys, multiple indent options, and JSON standards
 - **⌨️ Keyboard Shortcuts** - Power user shortcuts for faster workflow
 - **📱 Responsive Design** - Optimized for desktop, tablet, and mobile devices
 - **🌙 Modern UI** - Clean, professional interface with smooth animations
@@ -51,6 +57,8 @@
 - **⚡ Fast Performance** - Optimized for large JSON files
 - **🔒 Privacy-First** - All processing happens client-side, no data sent to servers
 - **♿ Accessibility** - WCAG compliant with keyboard navigation support
+- **📏 Multiple JSON Standards** - Support for RFC 8259, RFC 7159, RFC 4627, and ECMA-404
+- **🎯 Flexible Indentation** - 2, 3, 4 spaces or tab indentation options
 
 ---
 
@@ -77,7 +85,7 @@ python -m http.server 8000
 ## 🛠️ Usage
 
 ### Basic JSON Formatting
-1. **Input**: Paste or type your JSON in the input area
+1. **Input**: Paste, type, upload, or load JSON from URL
 2. **Format**: Click "Format JSON" or press `Ctrl+Enter`
 3. **Output**: View the formatted result with syntax highlighting
 
@@ -85,11 +93,25 @@ python -m http.server 8000
 1. **Input**: Enter JSON to validate
 2. **Validate**: Click "Validate" button
 3. **Result**: See validation status with error details if invalid
+4. **Auto-Fix**: Enable auto-fix to automatically correct common errors
+
+### Input Methods
+- **📝 Manual Input**: Type or paste JSON directly
+- **📁 File Upload**: Click "Upload File" to select a `.json` file
+- **🔗 URL Loading**: Click "Load URL" to fetch JSON from a remote URL
+- **💡 Example**: Click "Example" to load sample JSON data
 
 ### Advanced Options
 - **Sort Keys**: Automatically alphabetize object keys
-- **Remove Comments**: Strip JavaScript-style comments from JSON
+- **Indentation**: Choose 2, 3, 4 spaces or tab indentation
+- **JSON Standard**: Select from RFC 8259, RFC 7159, RFC 4627, or ECMA-404
+- **Auto-Fix Errors**: Automatically correct common JSON syntax issues
 - **Minify**: Compress JSON to minimal size
+
+### View Options
+- **🌳 Tree View**: Switch to interactive hierarchical view
+- **🔍 Search**: Find specific keys or values within JSON
+- **📊 Statistics**: View file size, depth, key count, and array statistics
 
 ### Export Options
 - **Copy**: Copy formatted JSON to clipboard
@@ -105,6 +127,12 @@ python -m http.server 8000
 | `Ctrl+K` | Clear All | Clear input and output |
 | `Ctrl+Shift+C` | Copy Result | Copy output to clipboard |
 | `Ctrl+V` | Paste | Paste from clipboard (when input focused) |
+| `Ctrl+U` | Upload File | Open file upload dialog |
+| `Ctrl+L` | Load URL | Open URL loading modal |
+| `Ctrl+F` | Search | Focus search input |
+| `Ctrl+T` | Tree View | Toggle tree view mode |
+| `Ctrl+E` | Example | Load example JSON |
+| `Escape` | Close Modal | Close any open modal |
 
 ---
 
@@ -116,16 +144,30 @@ json-formatter/
 ├── 🎨 styles.css          # Responsive styling and animations
 ├── ⚡ script.js           # Core application logic
 ├── 📖 README.md           # Project documentation
-└── 🚫 .gitignore          # Git ignore rules
+├── 📄 LICENSE             # MIT License
+├── 🚫 .gitignore          # Git ignore rules
+└── 🖼️ favicon/            # Favicon assets
+    ├── favicon.ico
+    ├── favicon-16x16.png
+    ├── favicon-32x32.png
+    ├── apple-touch-icon.png
+    └── site.webmanifest
 ```
 
 ### Key Components
 
-- **JSONFormatter Class**: Main application controller
+- **JSONFormatter Class**: Main application controller with comprehensive functionality
 - **Syntax Highlighter**: Custom JSON syntax highlighting engine
-- **Error Handler**: Comprehensive error reporting system
+- **Error Handler**: Comprehensive error reporting system with auto-fix capabilities
 - **Clipboard Manager**: Cross-browser clipboard integration
 - **File Exporter**: Client-side file download functionality
+- **URL Loader**: Remote JSON fetching with CORS handling
+- **File Upload Handler**: Local file processing and validation
+- **Tree View Renderer**: Interactive hierarchical JSON visualization
+- **Search Engine**: Real-time JSON content search and filtering
+- **Statistics Calculator**: JSON structure analysis and metrics
+- **Modal Manager**: User interface modal handling
+- **Toast Notification System**: User feedback and status messages
 
 ---
 
@@ -157,18 +199,30 @@ cp -r . /path/to/web/server/
 - **HTML5** - Semantic markup and modern web standards
 - **CSS3** - Advanced styling with Flexbox, Grid, and animations
 - **Vanilla JavaScript (ES6+)** - Modern JavaScript without frameworks
-- **Web APIs** - Clipboard API, File API, and Blob API
+- **Web APIs** - Clipboard API, File API, Blob API, and Fetch API
 
 ### External Resources
 - **Google Fonts** - Inter font family for typography
-- **Font Awesome** - Professional icon set
+- **Font Awesome 6.0** - Professional icon set via CDN
 - **CSS Gradients** - Modern visual design
+- **Web App Manifest** - PWA capabilities
 
 ### Performance Optimizations
-- **Debounced Input** - Optimized real-time validation
-- **Efficient Parsing** - Fast JSON processing
+- **Debounced Input** - Optimized real-time validation and search
+- **Efficient Parsing** - Fast JSON processing with error recovery
 - **Minimal DOM Manipulation** - Smooth user experience
+- **Event Delegation** - Optimized event handling
 - **Lazy Loading** - Resources loaded on demand
+- **Memory Management** - Efficient tree view rendering
+- **Caching** - Smart caching for URL-loaded content
+
+### Browser APIs Used
+- **Clipboard API** - Copy/paste functionality
+- **File API** - File upload and processing
+- **Blob API** - File download generation
+- **Fetch API** - Remote JSON loading
+- **URL API** - URL validation and processing
+- **History API** - Browser history management
 
 ---
 
@@ -183,9 +237,14 @@ cp -r . /path/to/web/server/
 | IE | 11+ | ⚠️ Limited Support |
 
 ### Feature Support
-- **Clipboard API**: Modern browsers only
+- **Clipboard API**: Modern browsers only (Chrome 66+, Firefox 63+, Safari 13.1+)
 - **File Download**: All supported browsers
+- **File Upload**: All supported browsers
+- **URL Loading**: All supported browsers (with CORS support)
 - **JSON Parsing**: Universal support
+- **Tree View**: All supported browsers
+- **Search & Filter**: All supported browsers
+- **Statistics**: All supported browsers
 
 ---
 
