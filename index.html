@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - Công cụ định dạng JSON miễn phí</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> JSON Formatter</h1>
+            <p>Công cụ định dạng và validate JSON miễn phí</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Input JSON</h2>
+                    <div class="actions">
+                        <button id="clearBtn" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Xóa
+                        </button>
+                        <button id="exampleBtn" class="btn btn-secondary">
+                            <i class="fas fa-lightbulb"></i> Ví dụ
+                        </button>
+                        <button id="pasteBtn" class="btn btn-secondary">
+                            <i class="fas fa-paste"></i> Paste
+                        </button>
+                    </div>
+                </div>
+                <textarea id="inputJson" placeholder="Nhập JSON của bạn vào đây..."></textarea>
+                <div class="error-message" id="errorMessage"></div>
+            </div>
+
+            <div class="controls">
+                <div class="format-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="sortKeys" checked>
+                        <span class="checkmark"></span>
+                        Sắp xếp keys
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="removeComments">
+                        <span class="checkmark"></span>
+                        Xóa comments
+                    </label>
+                </div>
+                <div class="format-buttons">
+                    <button id="formatBtn" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Format JSON
+                    </button>
+                    <button id="minifyBtn" class="btn btn-secondary">
+                        <i class="fas fa-compress"></i> Minify
+                    </button>
+                    <button id="validateBtn" class="btn btn-info">
+                        <i class="fas fa-check-circle"></i> Validate
+                    </button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-code"></i> Output</h2>
+                    <div class="actions">
+                        <button id="copyBtn" class="btn btn-success">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button id="downloadBtn" class="btn btn-success">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div class="output-container">
+                    <pre id="outputJson"><code>Kết quả sẽ hiển thị ở đây...</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Được tạo bởi <strong>JSON Formatter</strong> - Công cụ miễn phí để format và validate JSON</p>
+            <div class="features">
+                <span><i class="fas fa-check"></i> Format JSON</span>
+                <span><i class="fas fa-check"></i> Validate JSON</span>
+                <span><i class="fas fa-check"></i> Minify JSON</span>
+                <span><i class="fas fa-check"></i> Syntax Highlighting</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
