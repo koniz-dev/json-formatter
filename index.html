@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - Free JSON Formatting Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> JSON Formatter</h1>
+            <p>Free JSON formatting and validation tool</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Input JSON</h2>
+                    <div class="actions">
+                        <button id="clear-btn" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="example-btn" class="btn btn-orange">
+                            <i class="fas fa-lightbulb"></i> Example
+                        </button>
+                        <button id="paste-btn" class="btn btn-secondary">
+                            <i class="fas fa-paste"></i> Paste
+                        </button>
+                    </div>
+                </div>
+                <textarea id="input-json" placeholder="Enter your JSON here..."></textarea>
+                <div class="error-message" id="error-message"></div>
+            </div>
+
+            <div class="controls">
+                <div class="format-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="sort-keys">
+                        <span class="checkmark"></span>
+                        Sort keys
+                    </label>
+                </div>
+                <div class="format-buttons">
+                    <button id="format-btn" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Format JSON
+                    </button>
+                    <button id="minify-btn" class="btn btn-purple">
+                        <i class="fas fa-compress"></i> Minify
+                    </button>
+                    <button id="validate-btn" class="btn btn-warning">
+                        <i class="fas fa-check-circle"></i> Validate
+                    </button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-code"></i> Output</h2>
+                    <div class="actions">
+                        <button id="copy-btn" class="btn btn-success">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button id="download-btn" class="btn btn-info">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div class="output-container">
+                    <pre id="output-json"><code>Results will appear here...</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Created by <strong>JSON Formatter</strong> - Free tool to format and validate JSON</p>
+            <div class="features">
+                <span><i class="fas fa-check"></i> Format JSON</span>
+                <span><i class="fas fa-check"></i> Validate JSON</span>
+                <span><i class="fas fa-check"></i> Minify JSON</span>
+                <span><i class="fas fa-check"></i> Syntax Highlighting</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

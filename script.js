@@ -256,7 +256,7 @@ class JSONFormatter {
         const output = this.outputJson.textContent;
         
         if (!output || output === 'Results will appear here...') {
-            this.showError('Error!', 'No content to copy');
+            this.showWarning('Warning!', 'No content to copy');
             return;
         }
 
@@ -275,7 +275,7 @@ class JSONFormatter {
         const output = this.outputJson.textContent;
         
         if (!output || output === 'Results will appear here...') {
-            this.showError('Error!', 'No content to download');
+            this.showWarning('Warning!', 'No content to download');
             return;
         }
 
