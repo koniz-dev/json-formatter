@@ -3,23 +3,22 @@ class JSONFormatter {
     constructor() {
         this.initializeElements();
         this.bindEvents();
-        this.loadExample();
     }
 
     initializeElements() {
-        this.inputJson = document.getElementById('inputJson');
-        this.outputJson = document.getElementById('outputJson');
-        this.errorMessage = document.getElementById('errorMessage');
-        this.formatBtn = document.getElementById('formatBtn');
-        this.minifyBtn = document.getElementById('minifyBtn');
-        this.validateBtn = document.getElementById('validateBtn');
-        this.clearBtn = document.getElementById('clearBtn');
-        this.exampleBtn = document.getElementById('exampleBtn');
-        this.pasteBtn = document.getElementById('pasteBtn');
-        this.copyBtn = document.getElementById('copyBtn');
-        this.downloadBtn = document.getElementById('downloadBtn');
-        this.sortKeys = document.getElementById('sortKeys');
-        this.removeComments = document.getElementById('removeComments');
+        this.inputJson = document.getElementById('input-json');
+        this.outputJson = document.getElementById('output-json');
+        this.errorMessage = document.getElementById('error-message');
+        this.formatBtn = document.getElementById('format-btn');
+        this.minifyBtn = document.getElementById('minify-btn');
+        this.validateBtn = document.getElementById('validate-btn');
+        this.clearBtn = document.getElementById('clear-btn');
+        this.exampleBtn = document.getElementById('example-btn');
+        this.pasteBtn = document.getElementById('paste-btn');
+        this.copyBtn = document.getElementById('copy-btn');
+        this.downloadBtn = document.getElementById('download-btn');
+        this.sortKeys = document.getElementById('sort-keys');
+        this.toastContainer = document.getElementById('toast-container');
     }
 
     bindEvents() {
@@ -32,13 +31,13 @@ class JSONFormatter {
         this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         this.downloadBtn.addEventListener('click', () => this.downloadJSON());
         
-        // Auto-format on input change (with debounce)
+        // Auto-validate on input change (with debounce)
         let timeout;
         this.inputJson.addEventListener('input', () => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 if (this.inputJson.value.trim()) {
-                    this.validateJSON();
+                    this.autoValidate();
                 }
             }, 500);
         });
@@ -66,7 +65,7 @@ class JSONFormatter {
         });
     }
 
-    showError(message) {
+    showErrorOld(message) {
         this.errorMessage.textContent = message;
         this.errorMessage.classList.add('show');
         this.outputJson.innerHTML = '<code>Error: ' + message + '</code>';
@@ -78,31 +77,17 @@ class JSONFormatter {
 
     parseJSON(input) {
         try {
-            // Remove comments if option is enabled
-            let cleanInput = input;
-            if (this.removeComments.checked) {
-                cleanInput = this.removeJSONComments(input);
-            }
-            
-            return JSON.parse(cleanInput);
+            return JSON.parse(input);
         } catch (error) {
             throw new Error('Invalid JSON: ' + error.message);
         }
-    }
-
-    removeJSONComments(jsonString) {
-        // Remove single-line comments (// ...)
-        jsonString = jsonString.replace(/\/\/.*$/gm, '');
-        // Remove multi-line comments (/* ... */)
-        jsonString = jsonString.replace(/\/\*[\s\S]*?\*\//g, '');
-        return jsonString;
     }
 
     formatJSON() {
         const input = this.inputJson.value.trim();
         
         if (!input) {
-            this.showError('Please enter JSON to format');
+            this.showError('Error!', 'Please enter JSON to format');
             return;
         }
 
@@ -112,37 +97,54 @@ class JSONFormatter {
             
             let formatted;
             if (this.sortKeys.checked) {
-                formatted = JSON.stringify(parsed, null, 2);
+                formatted = JSON.stringify(parsed, this.sortKeysReplacer, 2);
             } else {
                 formatted = JSON.stringify(parsed, null, 2);
             }
 
             this.outputJson.innerHTML = this.syntaxHighlight(formatted);
-            this.showSuccess(this.formatBtn, 'Formatted successfully!');
+            this.showSuccess('Success!', 'JSON has been formatted successfully!');
             
         } catch (error) {
-            this.showError(error.message);
+            this.showError('JSON Error!', error.message);
         }
+    }
+
+    sortKeysReplacer(key, value) {
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
+            const sortedObj = {};
+            Object.keys(value).sort().forEach(k => {
+                sortedObj[k] = value[k];
+            });
+            return sortedObj;
+        }
+        return value;
     }
 
     minifyJSON() {
         const input = this.inputJson.value.trim();
         
         if (!input) {
-            this.showError('Please enter JSON to minify');
+            this.showError('Error!', 'Please enter JSON to minify');
             return;
         }
 
         try {
             this.hideError();
             const parsed = this.parseJSON(input);
-            const minified = JSON.stringify(parsed);
+            
+            let minified;
+            if (this.sortKeys.checked) {
+                minified = JSON.stringify(parsed, this.sortKeysReplacer);
+            } else {
+                minified = JSON.stringify(parsed);
+            }
             
             this.outputJson.innerHTML = this.syntaxHighlight(minified);
-            this.showSuccess(this.minifyBtn, 'Minified successfully!');
+            this.showSuccess('Success!', 'JSON has been minified successfully!');
             
         } catch (error) {
-            this.showError(error.message);
+            this.showError('JSON Error!', error.message);
         }
     }
 
@@ -151,18 +153,33 @@ class JSONFormatter {
         
         if (!input) {
             this.hideError();
-            this.outputJson.innerHTML = '<code>Enter JSON to validate...</code>';
+            this.showWarning('Warning!', 'Please enter JSON to validate');
             return;
         }
 
         try {
             this.parseJSON(input);
             this.hideError();
-            this.outputJson.innerHTML = '<code style="color: #28a745;">✓ Valid JSON!</code>';
-            this.showSuccess(this.validateBtn, 'Valid JSON!');
+            this.showSuccess('Valid!', 'Your JSON is completely valid!');
             
         } catch (error) {
-            this.showError(error.message);
+            this.showError('JSON Error!', error.message);
+        }
+    }
+
+    autoValidate() {
+        const input = this.inputJson.value.trim();
+        
+        if (!input) {
+            this.hideError();
+            return;
+        }
+
+        try {
+            this.parseJSON(input);
+            this.hideError();
+        } catch (error) {
+            this.showErrorOld(error.message);
         }
     }
 
@@ -214,7 +231,6 @@ class JSONFormatter {
             },
             "settings": {
                 "sortKeys": true,
-                "removeComments": false,
                 "indentSize": 2
             },
             "isActive": true,
@@ -230,9 +246,9 @@ class JSONFormatter {
             const text = await navigator.clipboard.readText();
             this.inputJson.value = text;
             this.formatJSON();
-            this.showSuccess(this.pasteBtn, 'Pasted from clipboard!');
+            this.showSuccess('Pasted!', 'Content has been pasted from clipboard successfully!');
         } catch (error) {
-            this.showError('Cannot read from clipboard. Please paste manually.');
+            this.showError('Error!', 'Cannot read from clipboard. Please paste manually.');
         }
     }
 
@@ -240,18 +256,18 @@ class JSONFormatter {
         const output = this.outputJson.textContent;
         
         if (!output || output === 'Results will appear here...') {
-            this.showError('No content to copy');
+            this.showError('Error!', 'No content to copy');
             return;
         }
 
         try {
             await navigator.clipboard.writeText(output);
-            this.showSuccess(this.copyBtn, 'Copied to clipboard!');
+            this.showSuccess('Copied!', 'Content has been copied to clipboard!');
         } catch (error) {
             // Fallback for older browsers
             this.inputJson.select();
             document.execCommand('copy');
-            this.showSuccess(this.copyBtn, 'Copied to clipboard!');
+            this.showSuccess('Copied!', 'Content has been copied to clipboard!');
         }
     }
 
@@ -259,7 +275,7 @@ class JSONFormatter {
         const output = this.outputJson.textContent;
         
         if (!output || output === 'Results will appear here...') {
-            this.showError('No content to download');
+            this.showError('Error!', 'No content to download');
             return;
         }
 
@@ -273,31 +289,68 @@ class JSONFormatter {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        this.showSuccess(this.downloadBtn, 'File downloaded!');
+        this.showSuccess('Downloaded!', 'JSON file has been downloaded successfully!');
     }
 
-    showSuccess(button, message) {
-        const originalText = button.innerHTML;
-        const originalClass = button.className;
+    showToast(type, title, message, duration = 4000) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
         
-        button.innerHTML = '<i class="fas fa-check"></i> ' + message;
-        button.className = button.className.replace(/btn-\w+/, 'btn-success');
+        const iconMap = {
+            success: 'fas fa-check-circle',
+            error: 'fas fa-exclamation-circle',
+            info: 'fas fa-info-circle',
+            warning: 'fas fa-exclamation-triangle'
+        };
         
+        toast.innerHTML = `
+            <i class="toast-icon ${iconMap[type]}"></i>
+            <div class="toast-content">
+                <h4 class="toast-title">${title}</h4>
+                <p class="toast-message">${message}</p>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        this.toastContainer.appendChild(toast);
+        
+        // Trigger animation
         setTimeout(() => {
-            button.innerHTML = originalText;
-            button.className = originalClass;
-        }, 2000);
+            toast.classList.add('show');
+        }, 100);
+        
+        // Auto remove
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 300);
+        }, duration);
+    }
+
+    showSuccess(title, message) {
+        this.showToast('success', title, message);
+    }
+
+    showError(title, message) {
+        this.showToast('error', title, message);
+    }
+
+    showInfo(title, message) {
+        this.showToast('info', title, message);
+    }
+
+    showWarning(title, message) {
+        this.showToast('warning', title, message);
     }
 }
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new JSONFormatter();
-    
-    // Add some helpful tips
-    console.log('💡 Tips:');
-    console.log('- Ctrl+Enter: Format JSON');
-    console.log('- Ctrl+K: Clear all');
-    console.log('- Ctrl+Shift+C: Copy result');
-    console.log('- Paste JSON directly from clipboard');
 });
+
