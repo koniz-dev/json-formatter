@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Formatter - Free JSON Formatting Tool</title>
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
     <link rel="manifest" href="favicon/site.webmanifest">
-    
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -29,16 +25,22 @@
                 <div class="section-header">
                     <h2><i class="fas fa-edit"></i> Input JSON</h2>
                     <div class="actions">
-                        <button id="clear-btn" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Clear
-                        </button>
                         <button id="example-btn" class="btn btn-orange">
                             <i class="fas fa-lightbulb"></i> Example
                         </button>
-                        <button id="paste-btn" class="btn btn-secondary">
-                            <i class="fas fa-paste"></i> Paste
-                        </button>
                     </div>
+                </div>
+                <div class="actions">
+                    <button id="clear-btn" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <button id="url-btn" class="btn btn-info">
+                        <i class="fas fa-link"></i> Load URL
+                    </button>
+                    <button id="upload-btn" class="btn btn-teal">
+                        <i class="fas fa-upload"></i> Upload File
+                    </button>
+                    <input type="file" id="file-input" accept=".json" style="display: none;">
                 </div>
                 <textarea id="input-json" placeholder="Enter your JSON here..."></textarea>
                 <div class="error-message" id="error-message"></div>
@@ -50,6 +52,29 @@
                         <input type="checkbox" id="sort-keys">
                         <span class="checkmark"></span>
                         Sort keys
+                    </label>
+                    <div class="indent-options">
+                        <label for="indent-select">Indent:</label>
+                        <select id="indent-select">
+                            <option value="2">2 spaces</option>
+                            <option value="3">3 spaces</option>
+                            <option value="4">4 spaces</option>
+                            <option value="tab">Tab</option>
+                        </select>
+                    </div>
+                    <div class="validation-options">
+                        <label for="standard-select">Standard:</label>
+                        <select id="standard-select">
+                            <option value="rfc8259">RFC 8259</option>
+                            <option value="rfc7159">RFC 7159</option>
+                            <option value="rfc4627">RFC 4627</option>
+                            <option value="ecma404">ECMA-404</option>
+                        </select>
+                    </div>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="auto-fix">
+                        <span class="checkmark"></span>
+                        Auto-fix errors
                     </label>
                 </div>
                 <div class="format-buttons">
@@ -75,10 +100,37 @@
                         <button id="download-btn" class="btn btn-info">
                             <i class="fas fa-download"></i> Download
                         </button>
+                        <button id="tree-view-btn" class="btn btn-purple">
+                            <i class="fas fa-sitemap"></i> Tree View
+                        </button>
                     </div>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search in JSON..." class="search-input">
+                    <button id="search-btn" class="btn btn-secondary">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
                 <div class="output-container">
                     <pre id="output-json"><code>Results will appear here...</code></pre>
+                </div>
+                <div class="stats-container" id="stats-container" style="display: none;">
+                    <div class="stat-item">
+                        <span class="stat-label">Size:</span>
+                        <span class="stat-value" id="size-stat">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Depth:</span>
+                        <span class="stat-value" id="depth-stat">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Keys:</span>
+                        <span class="stat-value" id="keys-stat">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Arrays:</span>
+                        <span class="stat-value" id="arrays-stat">-</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,13 +141,39 @@
                 <span><i class="fas fa-check"></i> Format JSON</span>
                 <span><i class="fas fa-check"></i> Validate JSON</span>
                 <span><i class="fas fa-check"></i> Minify JSON</span>
-                <span><i class="fas fa-check"></i> Syntax Highlighting</span>
+                <span><i class="fas fa-check"></i> Auto-fix Errors</span>
+                <span><i class="fas fa-check"></i> Tree View</span>
+                <span><i class="fas fa-check"></i> Search & Filter</span>
+                <span><i class="fas fa-check"></i> URL Loading</span>
+                <span><i class="fas fa-check"></i> File Upload</span>
+                <span><i class="fas fa-check"></i> Statistics</span>
             </div>
         </footer>
     </div>
 
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- URL Modal -->
+    <div id="url-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-link"></i> Load JSON from URL</h3>
+                <button class="modal-close" id="url-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="url" id="url-input" placeholder="Enter JSON URL..." class="url-input">
+                <div class="modal-actions">
+                    <button id="load-url-btn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Load JSON
+                    </button>
+                    <button id="cancel-url-btn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
