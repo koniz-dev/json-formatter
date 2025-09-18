@@ -69,7 +69,7 @@ class JSONFormatter {
     showError(message) {
         this.errorMessage.textContent = message;
         this.errorMessage.classList.add('show');
-        this.outputJson.innerHTML = '<code>Lỗi: ' + message + '</code>';
+        this.outputJson.innerHTML = '<code>Error: ' + message + '</code>';
     }
 
     hideError() {
@@ -86,7 +86,7 @@ class JSONFormatter {
             
             return JSON.parse(cleanInput);
         } catch (error) {
-            throw new Error('JSON không hợp lệ: ' + error.message);
+            throw new Error('Invalid JSON: ' + error.message);
         }
     }
 
@@ -102,7 +102,7 @@ class JSONFormatter {
         const input = this.inputJson.value.trim();
         
         if (!input) {
-            this.showError('Vui lòng nhập JSON để format');
+            this.showError('Please enter JSON to format');
             return;
         }
 
@@ -118,7 +118,7 @@ class JSONFormatter {
             }
 
             this.outputJson.innerHTML = this.syntaxHighlight(formatted);
-            this.showSuccess(this.formatBtn, 'Đã format thành công!');
+            this.showSuccess(this.formatBtn, 'Formatted successfully!');
             
         } catch (error) {
             this.showError(error.message);
@@ -129,7 +129,7 @@ class JSONFormatter {
         const input = this.inputJson.value.trim();
         
         if (!input) {
-            this.showError('Vui lòng nhập JSON để minify');
+            this.showError('Please enter JSON to minify');
             return;
         }
 
@@ -139,7 +139,7 @@ class JSONFormatter {
             const minified = JSON.stringify(parsed);
             
             this.outputJson.innerHTML = this.syntaxHighlight(minified);
-            this.showSuccess(this.minifyBtn, 'Đã minify thành công!');
+            this.showSuccess(this.minifyBtn, 'Minified successfully!');
             
         } catch (error) {
             this.showError(error.message);
@@ -151,15 +151,15 @@ class JSONFormatter {
         
         if (!input) {
             this.hideError();
-            this.outputJson.innerHTML = '<code>Nhập JSON để validate...</code>';
+            this.outputJson.innerHTML = '<code>Enter JSON to validate...</code>';
             return;
         }
 
         try {
             this.parseJSON(input);
             this.hideError();
-            this.outputJson.innerHTML = '<code style="color: #28a745;">✓ JSON hợp lệ!</code>';
-            this.showSuccess(this.validateBtn, 'JSON hợp lệ!');
+            this.outputJson.innerHTML = '<code style="color: #28a745;">✓ Valid JSON!</code>';
+            this.showSuccess(this.validateBtn, 'Valid JSON!');
             
         } catch (error) {
             this.showError(error.message);
@@ -192,7 +192,7 @@ class JSONFormatter {
 
     clearAll() {
         this.inputJson.value = '';
-        this.outputJson.innerHTML = '<code>Kết quả sẽ hiển thị ở đây...</code>';
+        this.outputJson.innerHTML = '<code>Results will appear here...</code>';
         this.hideError();
         this.inputJson.focus();
     }
@@ -201,7 +201,7 @@ class JSONFormatter {
         const example = {
             "name": "JSON Formatter",
             "version": "1.0.0",
-            "description": "Công cụ format JSON miễn phí",
+            "description": "Free JSON formatting tool",
             "features": [
                 "Format JSON",
                 "Validate JSON", 
@@ -230,36 +230,36 @@ class JSONFormatter {
             const text = await navigator.clipboard.readText();
             this.inputJson.value = text;
             this.formatJSON();
-            this.showSuccess(this.pasteBtn, 'Đã paste từ clipboard!');
+            this.showSuccess(this.pasteBtn, 'Pasted from clipboard!');
         } catch (error) {
-            this.showError('Không thể đọc từ clipboard. Vui lòng paste thủ công.');
+            this.showError('Cannot read from clipboard. Please paste manually.');
         }
     }
 
     async copyToClipboard() {
         const output = this.outputJson.textContent;
         
-        if (!output || output === 'Kết quả sẽ hiển thị ở đây...') {
-            this.showError('Không có nội dung để copy');
+        if (!output || output === 'Results will appear here...') {
+            this.showError('No content to copy');
             return;
         }
 
         try {
             await navigator.clipboard.writeText(output);
-            this.showSuccess(this.copyBtn, 'Đã copy vào clipboard!');
+            this.showSuccess(this.copyBtn, 'Copied to clipboard!');
         } catch (error) {
             // Fallback for older browsers
             this.inputJson.select();
             document.execCommand('copy');
-            this.showSuccess(this.copyBtn, 'Đã copy vào clipboard!');
+            this.showSuccess(this.copyBtn, 'Copied to clipboard!');
         }
     }
 
     downloadJSON() {
         const output = this.outputJson.textContent;
         
-        if (!output || output === 'Kết quả sẽ hiển thị ở đây...') {
-            this.showError('Không có nội dung để download');
+        if (!output || output === 'Results will appear here...') {
+            this.showError('No content to download');
             return;
         }
 
@@ -273,7 +273,7 @@ class JSONFormatter {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        this.showSuccess(this.downloadBtn, 'Đã download file!');
+        this.showSuccess(this.downloadBtn, 'File downloaded!');
     }
 
     showSuccess(button, message) {

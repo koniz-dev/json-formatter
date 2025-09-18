@@ -4,111 +4,111 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-brightgreen?style=for-the-badge)
 
-Một công cụ web miễn phí để format, validate và minify JSON với giao diện đẹp và dễ sử dụng.
+A free web tool to format, validate and minify JSON with a beautiful and user-friendly interface.
 
-## 🌟 Tính năng
+## 🌟 Features
 
-- ✨ **Format JSON** - Chuyển đổi JSON từ minified sang pretty-printed
-- 🔍 **Validate JSON** - Kiểm tra tính hợp lệ của JSON
-- 📦 **Minify JSON** - Nén JSON để tiết kiệm dung lượng
-- 🎨 **Syntax Highlighting** - Tô màu cú pháp JSON
-- 📋 **Copy/Paste** - Hỗ trợ copy từ clipboard và paste
-- 💾 **Download** - Tải xuống kết quả dưới dạng file .json
-- 📱 **Responsive** - Tương thích với mọi thiết bị
-- ⌨️ **Keyboard Shortcuts** - Phím tắt tiện lợi
+- ✨ **Format JSON** - Convert JSON from minified to pretty-printed
+- 🔍 **Validate JSON** - Check JSON validity
+- 📦 **Minify JSON** - Compress JSON to save space
+- 🎨 **Syntax Highlighting** - Color-coded JSON syntax
+- 📋 **Copy/Paste** - Clipboard support for easy data transfer
+- 💾 **Download** - Download results as .json files
+- 📱 **Responsive** - Works on all devices
+- ⌨️ **Keyboard Shortcuts** - Convenient hotkeys
 
 ## 🚀 Demo
 
-Truy cập: [https://your-username.github.io/json-formatter](https://your-username.github.io/json-formatter)
+Visit: [https://your-username.github.io/json-formatter](https://your-username.github.io/json-formatter)
 
-## 🛠️ Cách sử dụng
+## 🛠️ Usage
 
 ### Format JSON
-1. Nhập JSON vào ô input
-2. Nhấn nút "Format JSON" hoặc `Ctrl+Enter`
-3. Kết quả sẽ hiển thị ở ô output với syntax highlighting
+1. Enter JSON in the input field
+2. Click "Format JSON" button or press `Ctrl+Enter`
+3. Results will display in the output area with syntax highlighting
 
 ### Validate JSON
-1. Nhập JSON cần kiểm tra
-2. Nhấn nút "Validate"
-3. Hệ thống sẽ báo lỗi nếu JSON không hợp lệ
+1. Enter JSON to validate
+2. Click "Validate" button
+3. System will report errors if JSON is invalid
 
 ### Minify JSON
-1. Nhập JSON đã format
-2. Nhấn nút "Minify"
-3. Nhận được JSON đã được nén
+1. Enter formatted JSON
+2. Click "Minify" button
+3. Get compressed JSON output
 
-### Tùy chọn
-- **Sắp xếp keys**: Tự động sắp xếp các key theo thứ tự alphabet
-- **Xóa comments**: Loại bỏ các comment trong JSON
+### Options
+- **Sort keys**: Automatically sort keys alphabetically
+- **Remove comments**: Strip comments from JSON
 
 ## ⌨️ Keyboard Shortcuts
 
-| Phím tắt | Chức năng |
-|----------|-----------|
+| Shortcut | Function |
+|----------|----------|
 | `Ctrl+Enter` | Format JSON |
-| `Ctrl+K` | Xóa tất cả |
-| `Ctrl+Shift+C` | Copy kết quả |
+| `Ctrl+K` | Clear all |
+| `Ctrl+Shift+C` | Copy result |
 
-## 📁 Cấu trúc project
+## 📁 Project Structure
 
 ```
 json-formatter/
-├── index.html          # File HTML chính
+├── index.html          # Main HTML file
 ├── styles.css          # CSS styling
 ├── script.js           # JavaScript logic
-└── README.md           # Tài liệu hướng dẫn
+└── README.md           # Documentation
 ```
 
-## 🚀 Deploy lên GitHub Pages
+## 🚀 Deploy to GitHub Pages
 
-### Bước 1: Tạo repository trên GitHub
-1. Tạo repository mới trên GitHub
-2. Clone repository về máy local
+### Step 1: Create GitHub Repository
+1. Create a new repository on GitHub
+2. Clone repository to local machine
 
-### Bước 2: Upload code
+### Step 2: Upload Code
 ```bash
 git clone https://github.com/your-username/json-formatter.git
 cd json-formatter
-# Copy các file đã tạo vào thư mục này
+# Copy the created files into this directory
 git add .
 git commit -m "Initial commit: JSON Formatter"
 git push origin main
 ```
 
-### Bước 3: Enable GitHub Pages
-1. Vào repository trên GitHub
-2. Vào tab **Settings**
-3. Cuộn xuống phần **Pages**
-4. Chọn **Source**: Deploy from a branch
-5. Chọn **Branch**: main
-6. Nhấn **Save**
+### Step 3: Enable GitHub Pages
+1. Go to your repository on GitHub
+2. Navigate to **Settings** tab
+3. Scroll down to **Pages** section
+4. Select **Source**: Deploy from a branch
+5. Choose **Branch**: main
+6. Click **Save**
 
-### Bước 4: Truy cập website
-Sau vài phút, website sẽ có sẵn tại:
+### Step 4: Access Website
+After a few minutes, your website will be available at:
 `https://your-username.github.io/json-formatter`
 
-## 🛠️ Công nghệ sử dụng
+## 🛠️ Technologies Used
 
-- **HTML5** - Cấu trúc trang web
-- **CSS3** - Styling và responsive design
-- **Vanilla JavaScript** - Logic xử lý JSON
+- **HTML5** - Web page structure
+- **CSS3** - Styling and responsive design
+- **Vanilla JavaScript** - JSON processing logic
 - **Font Awesome** - Icons
 - **Google Fonts** - Typography
 
 ## 📱 Responsive Design
 
-Website được thiết kế responsive, tương thích với:
+The website is designed to be responsive and compatible with:
 - 💻 Desktop
 - 📱 Mobile
 - 📟 Tablet
 
-## 🔧 Tùy chỉnh
+## 🔧 Customization
 
-Bạn có thể tùy chỉnh giao diện bằng cách chỉnh sửa file `styles.css`:
+You can customize the interface by editing the `styles.css` file:
 
 ```css
-/* Thay đổi màu chủ đạo */
+/* Change primary colors */
 :root {
     --primary-color: #667eea;
     --secondary-color: #764ba2;
@@ -117,22 +117,22 @@ Bạn có thể tùy chỉnh giao diện bằng cách chỉnh sửa file `styles
 
 ## 📄 License
 
-MIT License - Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+MIT License - See [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contributing
 
-Mọi đóng góp đều được chào đón! Hãy:
+Contributions are welcome! Please:
 
-1. Fork repository
-2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Mở Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📞 Liên hệ
+## 📞 Contact
 
-Nếu có vấn đề hoặc góp ý, hãy tạo [Issue](https://github.com/your-username/json-formatter/issues) trên GitHub.
+If you have issues or suggestions, please create an [Issue](https://github.com/your-username/json-formatter/issues) on GitHub.
 
 ---
 
-⭐ Nếu project này hữu ích, hãy cho một star nhé!
+⭐ If this project is helpful, please give it a star!
